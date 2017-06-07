@@ -2,6 +2,9 @@
 This is a plugin of MediaElement.js
 you can write comments like http://www.nicovideo.jp/ or http://www.bilibili.com/
 
+## result
+[youtube](https://www.youtube.com/watch?v=L2DeUXXGWm0)
+
 ## how to use
 
     <video id="player1" width="640" height="360" style="max-width:100%;">
