@@ -10,12 +10,9 @@
 
 // Feature configuration
 Object.assign(mejs.MepDefaults, {
-	/**
-  * @type {?String}
-  */
-	barrageSubmit: "barragesubmit",
 	barrageLayer: "barragelayer",
-	barrageInput: "barrageinput",
+	barrageForm: "barrageform",
+	barrageInterval: 2,
 });
 
 Object.assign(MediaElementPlayer.prototype, {
@@ -26,13 +23,14 @@ Object.assign(MediaElementPlayer.prototype, {
 		var barrage = document.createElement('div');
 		barrage.className = t.options.classPrefix + "button " + t.options.classPrefix + "barrage " + (player.options.barrage ? t.options.classPrefix + "barrage-on" : t.options.classPrefix + "barrage-off");
 		barrage.innerHTML =
-			"<div class='barrageline'>"+
+			"<form class='barrageline' id='"+t.options.barrageForm+"'>"+
 			"  <div class='barrageinput'>"+
-			"      <input type='text' id="+t.options.barrageInput+"></input>"+
+			"      <input type='text'></input>"+
 			"  </div>"+
-			"  <div class='barragesubmit' id="+t.options.barrageSubmit+" >"+
+			"  <div class='barragesubmit'>"+
+			"    <button class='barragesubmit'></button>"+
 			"  </div>"+
-			"</div>"
+			"</form>"
 
 		t.addControlElement(barrage, 'barrage');
 
@@ -41,10 +39,10 @@ Object.assign(MediaElementPlayer.prototype, {
 		barragelayer.className = t.options.classPrefix + 'layer ' + t.options.classPrefix + 'overlay ' + t.options.classPrefix + 'barrage';
 		barragelayer.style="display:block;width:100%;height:100%;"
 		barragelayer.id=t.options.barrageLayer
-		barragelayer.innerHTML = '<p anim=animR time=1 >い</p><p anim=animR time=0 >あ</p><p anim=animR time=2 >う</p><p anim=animL time=3 >え</p><p anim=animR time=4 >お</p>';
+		barragelayer.innerHTML = '';
 		layers.insertBefore(barragelayer, layers.firstChild);
 
-		media.addEventListener('play', function () {
+		player.playBarrage=function(){
 			var times=[null,null,null,null,null,null,null,null,null]
 			var rices=[]
 			for(var i=0;i<barragelayer.childNodes.length;i++){
@@ -61,7 +59,7 @@ Object.assign(MediaElementPlayer.prototype, {
 				var rice=rices[i]
 				var line
 				for(var j=0;j<times.length;j++){
-					if((times[j]==null)||(rice.time-times[j])>1){
+					if((times[j]==null)||(rice.time-times[j])>t.options.barrageInterval){
 						line=j
 						break
 					}
@@ -76,8 +74,8 @@ Object.assign(MediaElementPlayer.prototype, {
 					"top:"+(line/times.length*80)+"%;"
 				)
 			}
-		});
-		media.addEventListener('pause', function () {
+		}
+		player.pauseBarrage=function(){
 			for(var i=0;i<barragelayer.childNodes.length;i++){
 				var rice=barragelayer.childNodes.item(i);
 				var style=rice.currentStyle||document.defaultView.getComputedStyle(rice,'')
@@ -88,7 +86,9 @@ Object.assign(MediaElementPlayer.prototype, {
 					"transform:"+style.transform+";"
 				)
 			}
-		});
+		}
+		media.addEventListener('play', player.playBarrage)
+		media.addEventListener('pause', player.pauseBarrage);
 
 		// add a click toggle event
 		barrage.addEventListener('click', function () {
