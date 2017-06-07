@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MediaElement.js 3.0 - audio/video unification library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://rawgit.com/mediaelement/mediaelement/master/build/mediaelementplayer.min.css">
+    <link rel="stylesheet" href="barrage.css">
+    <link rel="stylesheet" href="select.css">
+
+    <style>
+        #container {
+            padding: 0 20px 50px;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            tab-size: 2;
+            background: black;
+            color: white;
+        }
+
+        pre[data-lang]::before {
+            content: attr(data-lang);
+            display: block;
+            background-color: #FFA500;
+            background-image: -webkit-linear-gradient(top, #FFA500, #D67E21);
+            background-image: linear-gradient(to bottom, #FFA500, #D67E21);
+            padding: 10px;
+        }
+
+        code {
+            font-family: "Courier New", Courier, monospace;
+            padding: 10px 20px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="container">
+    <section>
+        <h1>MediaElement.js - Plugins</h1>
+
+        <h2><em>audio/video</em> unification library</h2>
+
+        <p><em>MediaElement</em> is a wrapper that mimics the native HTML5 MediaElement syntax (get/set) as a renderer
+            that can handle media from HTML5, YouTube, Vimeo, Soundcloud, Flash, Facebook, and other libraries.</p>
+
+        <p><em>MediaElementPlayer</em> is built off of MediaElement and creates a fully featured player on top of the
+            unified syntax from MediaElement.</p>
+
+        <p>This demo shows how to setup (and for some, configure) plugins to expand the player.</p>
+    </section>
+
+    <div class="players" id="player1-container">
+
+        <h3>Video Player</h3>
+
+        <div class="media-wrapper">
+            <video id="player1" width="640" height="360" style="max-width:100%;">
+                <source data-quality="1" src="http://gorovideo.com/blob/AMIfv94B2VOBhL8qSjG6jke8uZVqL-99iVcT10oFBzJjUYXiXCyy_05vmhwpzh1kBEPyzIf__ak7GLoLNz0PI7slckPCjI-atm1tWPs-b9OAbFP55qDSqwSiN703luV0Cb0zEUjF-Q2Ntv8JI57iRm4Wvm-lryULTmQ0mQrJqOF7cM3hJ_C0arjlsnVWDBbBBTF5OwNPK4Ixl7OWdEPH0F65u3Xx5zrl6971yEDRP7viGDmn9umNr8oFypjJZQ_A1qzot6wPAkmIWwYx3MHREAGIbqnZ2MxZ36iqcmOrePzKwXV3PJJjBkiLUo4ltv_SB42Avs54y-kSh40QhHAhWe2QQ3Eh-cL4yODVuQQToc1bcg8JsIJlB8Sf5Nro5mRF-g1NItXmUTvjuaAwhXdPG3PUoM3e3AqDT5pM8mCY-pGfECqIAV_VExM">
+                <source data-quality="2" src="http://gorovideo.com/blob/AMIfv94B2VOBhL8qSjG6jke8uZVqL-99iVcT10oFBzJjUYXiXCyy_05vmhwpzh1kBEPyzIf__ak7GLoLNz0PI7slckPCjI-atm1tWPs-b9OAbFP55qDSqwSiN703luV0Cb0zEUjF-Q2Ntv8JI57iRm4Wvm-lryULTmQ0mQrJqOF7cM3hJ_C0arjlsnVWDBbBBTF5OwNPK4Ixl7OWdEPH0F65u3Xx5zrl6971yEDRP7viGDmn9umNr8oFypjJZQ_A1qzot6wPAkmIWwYx3MHREAGIbqnZ2MxZ36iqcmOrePzKwXV3PJJjBkiLUo4ltv_SB42Avs54y-kSh40QhHAhWe2QQ3Eh-cL4yODVuQQToc1bcg8JsIJlB8Sf5Nro5mRF-g1NItXmUTvjuaAwhXdPG3PUoM3e3AqDT5pM8mCY-pGfECqIAV_VExM">
+            </video>
+        </div>
+        <h4>Code snippet</h4>
+        <pre data-lang="Javascript"><code></code></pre>
+    </div>
+</div>
+
+<script src="https://rawgit.com/mediaelement/mediaelement/master/build/mediaelement-and-player.min.js"></script>
+<script src="barrage.js"></script>
+<script src="select.js"></script>
+<script id="mejs-code">
+	new MediaElementPlayer('player1', {
+		// This is needed to make Jump Forward to work correctly
+		autoRewind: false,
+		features: ['playpause', 'current', 'progress', 'duration', 'volume', 'barrage', 'fullscreen'],
+		// Markers plugin configuration
+		markers: [5, 10, 25, 40],
+		markerWidth: 5,
+		markerCallback: function (media, currentTime) {
+			console.log('Reached ' + currentTime + ' secs');
+		},
+		// Ads/Vast/VPAID configuration
+		vastAdTagUrl: 'vast_sample.xml',
+		vastAdsType: 'vast',
+		adsPrerollAdEnableSkip: true,
+		adsPrerollAdSkipSeconds: 5,
+		//
+		qualityText:"あいうえお"
+	});
+</script>
+<script>
+	document.body.querySelector('code').innerText = document.getElementById('mejs-code').innerText;
+</script>
+</body>
+</html>
