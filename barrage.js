@@ -8,38 +8,29 @@
  * if activated
  */
 
-// Translations (English required)
-
-mejs.i18n.en["mejs.barrageSubmit"] = "Submit";
-
 // Feature configuration
 Object.assign(mejs.MepDefaults, {
 	/**
   * @type {?String}
   */
-	barrageSubmit: null
+	barrageSubmit: "barragesubmit",
+	barrageLayer: "barragelayer",
+	barrageInput: "barrageinput",
 });
 
 Object.assign(MediaElementPlayer.prototype, {
 	buildbarrage: function buildbarrage(player, controls, layers, media) {
 		var t = this
-		var barrageTitle = mejs.Utils.isString(t.options.barrageSubmit) ? t.options.barrageSubmit : mejs.i18n.t('mejs.barrageSubmit')
 
 
 		var barrage = document.createElement('div');
 		barrage.className = t.options.classPrefix + "button " + t.options.classPrefix + "barrage " + (player.options.barrage ? t.options.classPrefix + "barrage-on" : t.options.classPrefix + "barrage-off");
 		barrage.innerHTML =
 			"<div class='barrageline'>"+
-			"  <div class='barragecolor'>"+
-			//"      <input type='text'></input>"+
-			"  </div>"+
-			"  <div class='barragemove'>"+
-			//"      <input type='text'></input>"+
-			"  </div>"+
 			"  <div class='barrageinput'>"+
-			"      <input type='text'></input>"+
+			"      <input type='text' id="+t.options.barrageInput+"></input>"+
 			"  </div>"+
-			"  <div class='barragesubmit'>"+
+			"  <div class='barragesubmit' id="+t.options.barrageSubmit+" >"+
 			"  </div>"+
 			"</div>"
 
@@ -49,6 +40,7 @@ Object.assign(MediaElementPlayer.prototype, {
 		barragelayer = document.createElement('div');
 		barragelayer.className = t.options.classPrefix + 'layer ' + t.options.classPrefix + 'overlay ' + t.options.classPrefix + 'barrage';
 		barragelayer.style="display:block;width:100%;height:100%;"
+		barragelayer.id=t.options.barrageLayer
 		barragelayer.innerHTML = '<p anim=animR time=1 >い</p><p anim=animR time=0 >あ</p><p anim=animR time=2 >う</p><p anim=animL time=3 >え</p><p anim=animR time=4 >お</p>';
 		layers.insertBefore(barragelayer, layers.firstChild);
 

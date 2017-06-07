@@ -50,6 +50,9 @@
 .mejs__barrage>.barrageline>.barrageinput>input{
 	width:100%;
 	height:100%;
+	border:0;
+	color:white;
+	background-color:rgba(255,255,255,0.3);
 }
 .mejs__barrage>.barrageline>.barragesubmit{
 	display:block;
@@ -61,26 +64,4 @@
 
     background-image: url("barrage.svg");
     background-position: -00px 0px;
-}
-
-.play .over p{
-
-	position:absolute;
-
-	color:white;
-	white-space:nowrap;
-	font-size: 3vw;
-
-	animation-duration:5s;
-	animation-timing-function:linear;
-	animation-fill-mode:both;
-
-	left:100%;
-
-}
-
-.play.play-paused .over p{
-
-	animation-play-state: paused;
-
 }
